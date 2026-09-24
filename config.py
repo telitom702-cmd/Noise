@@ -7,7 +7,7 @@ class Config:
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "8982103415:AAH5meSpQewu-0nBm-yTk1-BBhLyaaOXjS4")
 
     # Optional
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "1004456487791"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1004456487791"))
 
     # Maximum processing size in MB
     MAX_FILE_SIZE = int(
