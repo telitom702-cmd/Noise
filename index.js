@@ -152,6 +152,7 @@ async function processMedia(ctx, type) {
             `${id}_input${extension}`
         );
 
+        // আউটপুট ফাইলের নামে _clean যোগ করা হলো
         outputPath = path.join(
             TEMP_DIR,
             `${id}_output${type === "video" ? ".mp4" : ".mp3"}`
@@ -183,7 +184,8 @@ async function processMedia(ctx, type) {
         if (type === "video") {
             await ctx.replyWithVideo(
                 {
-                    source: outputPath
+                    source: outputPath,
+                    filename: `clean_${originalName}` 
                 },
                 {
                     caption:
@@ -194,7 +196,8 @@ async function processMedia(ctx, type) {
         } else {
             await ctx.replyWithAudio(
                 {
-                    source: outputPath
+                    source: outputPath,
+                    filename: `clean_${originalName}` 
                 },
                 {
                     caption:
@@ -275,8 +278,9 @@ function runFFmpeg(input, output, type) {
                 "-c:v",
                 "copy",
 
+                // nr=80 দিলে নয়েজ রিডাকশন বেশি ভালোভাবে কাজ করে
                 "-af",
-                "afftdn=nf=-25",
+                "afftdn=nr=80:nf=-25",
 
                 "-c:a",
                 "aac",
@@ -299,7 +303,7 @@ function runFFmpeg(input, output, type) {
                 input,
 
                 "-af",
-                "afftdn=nf=-25",
+                "afftdn=nr=80:nf=-25",
 
                 "-c:a",
                 "libmp3lame",
